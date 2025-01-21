@@ -13,7 +13,7 @@ class Product(models.Model):
         help_text="Введите описание продукта",
     )
     image = models.ImageField(
-        upload_to="catalog/image",  # Папка для хранения изображений
+        upload_to="catalog/image/",  # Папка для хранения изображений
         blank=True,
         null=True,
         verbose_name="Фото продукта",
@@ -51,6 +51,7 @@ class Product(models.Model):
         return self.name
 
 
+# Model representing a Category entity
 class Category(models.Model):
     """Represents a category with name and optional description."""
 
@@ -66,9 +67,11 @@ class Category(models.Model):
         help_text="Введите описание категории",  # Tooltip/help text in admin panel
     )
 
+    # Meta information for the Category model
     class Meta:
         verbose_name = "Категория"  # Singular name for admin panel
         verbose_name_plural = "Категории"  # Plural name for admin panel
 
+    # String representation of the Category object
     def __str__(self):
         return self.name
