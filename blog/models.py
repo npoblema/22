@@ -34,7 +34,6 @@ class Post(models.Model):
         default=0,
     )
 
-
     class Meta:
         verbose_name = "Пост"
         verbose_name_plural = "Посты"
