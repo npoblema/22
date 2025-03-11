@@ -15,7 +15,7 @@ class Product(models.Model):
         help_text="Введите описание продукта",
     )
     image = models.ImageField(
-        upload_to="catalog/image/",
+        upload_to="catalog/image/",  # Папка для хранения изображений
         blank=True,
         null=True,
         verbose_name="Фото продукта",
@@ -43,35 +43,43 @@ class Product(models.Model):
         verbose_name="Дата последнего изменения",
         help_text="Введите дату последнего изменения",
     )
-    owner = models.ForeignKey(User, verbose_name="Создатель", help_text="Укажите создателя", blank=True, null=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(User, verbose_name="Создатель", help_text="Укажите создателя", blank=True, null=True,
+                              on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name", "category"]
+        permissions = [
+            ("can_edit_product", "can edit product"),
+            ("can_edit_description", "can edit description")
+        ]
 
     def __str__(self):
         return self.name
 
 
+# Model representing a Category entity
 class Category(models.Model):
     """Represents a category with name and optional description."""
 
     name = models.CharField(
         max_length=100,
-        verbose_name="Название категории",
-        help_text="Введите название категории",
+        verbose_name="Название категории",  # Display name for admin panel
+        help_text="Введите название категории",  # Tooltip/help text in admin panel
     )
     description = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name="Описание категории",
-        help_text="Введите описание категории",
+        blank=True,  # Field is optional
+        null=True,  # Allows storing null values
+        verbose_name="Описание категории",  # Display name for admin panel
+        help_text="Введите описание категории",  # Tooltip/help text in admin panel
     )
 
+    # Meta information for the Category model
     class Meta:
-        verbose_name = "Категория"
-        verbose_name_plural = "Категории"
+        verbose_name = "Категория"  # Singular name for admin panel
+        verbose_name_plural = "Категории"  # Plural name for admin panel
 
+    # String representation of the Category object
     def __str__(self):
         return self.name
